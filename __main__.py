@@ -14,11 +14,16 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def download_video(update: Update, context: CallbackContext) -> None:
     update.message.reply_chat_action(ChatAction.RECORD_AUDIO)
-    audio_filename = download_audio(update.message.text)
-    audio_file = open(audio_filename, 'rb')
+    audio_file, display_name = download_audio(update.message.text)
 
     update.message.reply_chat_action(ChatAction.UPLOAD_AUDIO)
-    update.message.reply_audio(audio_file, quote=True, timeout=180)
+    update.message.reply_audio(
+        audio_file,
+        title=display_name,
+        filename=f'{display_name}.mp3',
+        quote=True,
+        timeout=180
+    )
 
     os.remove(audio_file.name)
 
@@ -35,4 +40,3 @@ updater.dispatcher.add_error_handler(error_handler)
 
 updater.start_polling()
 updater.idle()
-
