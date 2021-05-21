@@ -1,2 +1,2 @@
 python-telegram-bot==13.5
-youtube-dl==2021.4.26
+youtube-dl==2021.5.16
